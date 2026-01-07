@@ -1,0 +1,26 @@
+name: Daily TikTok Sheet Update
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # UTC 00:00 = KST 09:00
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Run updater
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          SPREADSHEET_NAME: "tiktok_raw_testVer"
+          WORKSHEET_NAME: "Sheet1"
+        run: python main.py
