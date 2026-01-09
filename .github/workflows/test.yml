@@ -19,7 +19,7 @@ jobs:
       - name: Run crawler
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-          SPREADSHEET_NAME: "tiktok_raw_gitTestVer"
+          SPREADSHEET_ID: "1vJ-BXCor7tfYHsez62Sg-LgBF1tJEzDJmhTSABpR6fI"
           WORKSHEET_NAME: "Sheet1"
           LOG_EVERY_N: "25"
           HEARTBEAT_EVERY_SEC: "120"
