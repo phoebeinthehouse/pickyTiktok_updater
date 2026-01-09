@@ -189,10 +189,17 @@ def main():
     print(f"[CONFIG] sheet='{SPREADSHEET_NAME}' tab='{WORKSHEET_NAME}' | H(url) -> I-L(metrics)")
 
     gc = get_gspread_client()
-    sh = gc.open(SPREADSHEET_NAME)
-    ws = sh.worksheet(WORKSHEET_NAME)
 
-    session = requests.Session()
+SPREADSHEET_ID = os.environ.get(
+    "SPREADSHEET_ID",
+    "1vJ-BXCor7tfYHsez62Sg-LgBF1tJEzDJmhTSABpR6fI"
+)
+
+sh = gc.open_by_key(SPREADSHEET_ID)
+ws = sh.worksheet(WORKSHEET_NAME)
+
+session = requests.Session()
+
 
     urls = ws.col_values(URL_COL)  # includes header
     if len(urls) < 2:
