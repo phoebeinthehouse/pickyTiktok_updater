@@ -1,10 +1,10 @@
-name: Test Actions Run
+name: TikTok Crawl to Sheet
 
 on:
   workflow_dispatch:
 
 jobs:
-  test:
+  run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,8 +13,19 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install deps
         run: pip install -r requirements.txt
 
-      - name: Run main.py
+      - name: Run crawler
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          SPREADSHEET_NAME: "tiktok_raw_gitTestVer"
+          WORKSHEET_NAME: "Sheet1"
+          LOG_EVERY_N: "25"
+          HEARTBEAT_EVERY_SEC: "120"
+          SLEEP1_MIN: "2.0"
+          SLEEP1_MAX: "4.0"
+          SLEEP2_MIN: "4.0"
+          SLEEP2_MAX: "7.0"
+          WRITE_BLOCK_ROWS: "200"
         run: python main.py
