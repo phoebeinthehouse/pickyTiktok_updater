@@ -1,0 +1,47 @@
+name: TikTok Crawl to Sheet
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 04:00 Asia/Seoul (KST, UTC+9) == 19:00 UTC (previous day)
+    - cron: "0 19 * * *"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360  # 6시간. (대략 4시간 걸린다 하셔서 여유)
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Install Playwright browsers
+        run: python -m playwright install --with-deps chromium
+
+      - name: Run crawler
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          SPREADSHEET_ID: "1DcBlP2u9g53k65PEtRUsYo5XRf9BtTF4-im2OQyFPHc"
+          WORKSHEET_NAME: "Sheet1"
+
+          # tuning (필요시 조정)
+          LOG_EVERY_N: "50"
+          HEARTBEAT_EVERY_SEC: "120"
+          SLEEP1_MIN: "1.5"
+          SLEEP1_MAX: "3.0"
+          SLEEP2_MIN: "6.0"
+          SLEEP2_MAX: "10.0"
+          MAX_ROUNDS: "6"
+          STALL_ROUNDS: "2"
+          HEADLESS: "true"
+          NAV_TIMEOUT_MS: "45000"
+          EXTRA_WAIT_SEC: "2.5"
+          WRITE_BATCH_SIZE: "80"
+          WRITE_PAUSE_SEC: "8.0"
+          READ_PAUSE_SEC: "1.0"
+        run: python main.py
