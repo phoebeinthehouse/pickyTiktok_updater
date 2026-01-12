@@ -1,3 +1,4 @@
-requests
-gspread
-google-auth
+gspread==6.1.4
+google-auth==2.34.0
+playwright==1.46.0
+nest_asyncio==1.6.0
