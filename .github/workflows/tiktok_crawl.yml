@@ -26,7 +26,7 @@ jobs:
       - name: Run crawler
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-          SPREADSHEET_ID: "1DcBlP2u9g53k65PEtRUsYo5XRf9BtTF4-im2OQyFPHc"
+          SPREADSHEET_ID: "1r-2xvkL50cAISEf9PP49Ul_D_DuwebH_IIWH6lJtWec"
           WORKSHEET_NAME: "Sheet1"
 
           # tuning (필요시 조정)
